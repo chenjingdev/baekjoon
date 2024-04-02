@@ -1,27 +1,32 @@
 import sys
 input = sys.stdin.readline
-sys.setrecursionlimit(10**6)
+sys.setrecursionlimit(20000)
 
-pre = []
+preorder = []
 while True:
     try:
-        pre.append(int(input()))
+        preorder.append(int(input()))          
     except:
         break
 
 def postorder(start, end):
-    if start > end:
+    if start >= end-1:
+        print(preorder[start])
         return
-    root = pre[start]
-    idx = start + 1
     
-    while idx <= end:
-        if pre[idx] > root:
+    if preorder[start] > preorder[end-1] or preorder[start] < preorder[start+1]:
+        postorder(start+1, end)
+        print(preorder[start])
+        return
+    
+    mid = 0
+    for i in range(start+1, end):
+        if preorder[start] < preorder[i]:
+            mid = i
             break
-        idx += 1
-    
-    postorder(start + 1, idx - 1)
-    postorder(idx, end)
-    print(root, end = " ")
 
-postorder(0, len(pre) - 1)
+    postorder(start+1, mid)
+    postorder(mid, end)
+    print(preorder[start])
+    
+postorder(0, len(preorder))
