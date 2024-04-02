@@ -1,5 +1,13 @@
 import sys
+input = sys.stdin.readline
 sys.setrecursionlimit(10**6)
+
+pre = []
+while True:
+    try:
+        pre.append(int(input()))
+    except:
+        break
 
 def postorder(start, end):
     if start > end:
@@ -14,13 +22,6 @@ def postorder(start, end):
     
     postorder(start + 1, idx - 1)
     postorder(idx, end)
-    print(root)
-
-pre = []
-while True:
-    try:
-        pre.append(int(input()))
-    except:
-        break
+    print(root, end = " ")
 
 postorder(0, len(pre) - 1)
